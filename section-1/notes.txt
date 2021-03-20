@@ -1,0 +1,23 @@
+Main dependencies of Node Js:
+V8: to run js outside the browser
+libuv: c++ open source project, gives access to networking, file system, concurrency, etc.
+
+some consistent api's which node offers
+http, fs, crypto, path(implemented inside libuv)
+
+
+So, say you want to read a file by fs.readFile(), now there's no direct implementation of this in JS.
+What node does is, connect this JS function with the underlying c++ code which does read a file(libuv part) and it
+converts values between JS and c++ world(v8 part).
+
+Whenever we run a js file, node creates a single thread and runs everything in that thread, called
+the event-loop.
+
+node Event Loop : Single Threaded
+Some of Node Framework/Std Lib : Not Single threaded.
+
+If node was single threaded, then it would have taken 2secs total. But it isn't so, why?
+
+libuv: for some standard tasks it decided to do the expensive tasks outside the event-loop thread.
+It uses thread-pool(by default 4 threads).
+If node was truly single threaded we would have to wait for each pbkdf2 to finish.
